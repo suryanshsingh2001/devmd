@@ -6,9 +6,9 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 export async function POST(req: Request) {
   try {
     const { text } = await req.json();
-
+    
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
+    
     const prompt = `Convert the following text to professional markdown format optimized for dev.to.
 
 Key requirements:
@@ -18,7 +18,9 @@ Key requirements:
 - Ensure proper spacing between sections
 - Format code blocks with language-specific syntax highlighting
 - Create readable paragraphs with clear breaks
+- For lists, use bullet points or numbered lists
 - Add relevant tags if mentioned in content
+- For tables, use standard markdown table syntax with headers and aligned columns
 
 Text to convert:
 ${text}`;
