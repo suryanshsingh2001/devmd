@@ -17,6 +17,24 @@ const poppinSans = Poppins({
 export const metadata: Metadata = {
   title: config.name,
   description: config.description,
+
+  // Open Graph
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: config.url,
+    siteName: config.name,
+    title: config.name,
+    description: config.description,
+    images: [
+      {
+        url: `${config.url}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: config.name,
+      },
+    ],
+  },
  
 };
 
