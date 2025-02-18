@@ -30,13 +30,16 @@ export default function Home() {
         body: JSON.stringify({ text: inputText }),
       });
 
-      if (!response.ok) throw new Error("Conversion failed");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.text || "Failed to convert text to markdown");
+      }
 
       const data = await response.json();
       setMarkdown(data.markdown);
       toast.success("Text converted to markdown successfully");
-    } catch (error) {
-      toast.error("Failed to convert text to markdown");
+    } catch (error : any) {
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
