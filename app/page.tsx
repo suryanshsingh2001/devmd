@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { FileText, ArrowRight, Copy, Wand2 } from "lucide-react";
+import { FileText, ArrowRight, Copy, Wand2, BookMarked } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 
@@ -93,10 +93,10 @@ export default function Home() {
             </Button>
           </Card>
 
-          <Card className="p-2 space-y-4">
+          <Card className="p-6  space-y-4">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <ArrowRight className="w-5 h-5 text-green-500" />
+                <BookMarked className="w-5 h-5 text-green-500" />
                 <h2 className="text-xl font-semibold">Markdown Output</h2>
               </div>
               {markdown && (

@@ -3,12 +3,14 @@ import { Menu, ThumbsUp, Github } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
-    Sheet,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
+import Image from "next/image";
+import { config } from "@/config";
 
 const Header = () => {
   return (
@@ -17,7 +19,14 @@ const Header = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center gap-2">
+              <Image
+                src="/logo.svg"
+                alt="MarkdownAI"
+                width={32}
+                height={32}
+                className=""
+              />
               <span className="text-2xl font-bold">MarkdownAI</span>
             </Link>
           </div>
@@ -25,13 +34,21 @@ const Header = () => {
           {/* Action Buttons */}
           <div className="flex items-center space-x-4">
             <Button variant="outline" size="sm" className="hidden sm:flex">
-              <ThumbsUp className="h-4 w-4 mr-2" />
-              Upvote Project
+              <Image
+                src="/peerlist.svg"
+                alt="Upvote"
+                width={24}
+                height={24}
+                className=""
+              />
+              Upvote on Peerlist
             </Button>
-            <Button variant="outline" size="sm" className="hidden sm:flex">
-              <Github className="h-4 w-4 mr-2" />
-              Source Code
-            </Button>
+            <Link href={config.githubLink}>
+              <Button variant="outline" size="sm" className="hidden sm:flex">
+                <Github className="h-4 w-4" />
+                Source Code
+              </Button>
+            </Link>
 
             {/* Mobile Navigation (Sheet/Drawer) */}
             <div className="sm:hidden">
