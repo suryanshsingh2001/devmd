@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     description: config.description,
     images: [
       {
-        url: `${config.url}/og-image.png`,
+        url: `${config.logo}`,
         width: 1200,
         height: 630,
         alt: config.name,
