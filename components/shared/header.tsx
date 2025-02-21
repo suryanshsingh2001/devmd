@@ -33,6 +33,7 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-4">
+            <Link href={config.peerlistLink}>
             <Button variant="outline" size="sm" className="hidden sm:flex">
               <Image
                 src="/peerlist.svg"
@@ -43,6 +44,7 @@ const Header = () => {
               />
               Upvote on Peerlist
             </Button>
+            </Link>
             <Link href={config.githubLink}>
               <Button variant="outline" size="sm" className="hidden sm:flex">
                 <Github className="h-4 w-4" />
