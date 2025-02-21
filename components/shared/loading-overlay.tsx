@@ -1,4 +1,4 @@
-import { Loader2 } from "lucide-react";
+"use client"
 import { MultiStepLoader } from "../ui/multi-step-loader";
 
 interface LoadingOverlayProps {

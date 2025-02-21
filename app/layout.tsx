@@ -6,13 +6,12 @@ import { ArrowRight, Copy, FileText, Wand2 } from "lucide-react";
 import Header from "@/components/shared/header";
 import { config } from "@/config";
 import Footer from "@/components/shared/footer";
-
+import { ThemeProvider } from "@/components/shared/theme-provider";
 const poppinSans = Poppins({
   weight: "400",
   variable: "--font-poppins-sans",
   subsets: ["latin"],
 });
-
 
 export const metadata: Metadata = {
   title: config.name,
@@ -35,7 +34,6 @@ export const metadata: Metadata = {
       },
     ],
   },
- 
 };
 
 export default function RootLayout({
@@ -45,9 +43,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppinSans.variable} antialiased`}
-      >
+      <body className={`${poppinSans.variable} antialiased`}>
+        <ThemeProvider
+          attribute={"class"}
+          enableSystem
+          disableTransitionOnChange
+        />
         <Toaster position="top-center" richColors />
         <Header />
         {children}
