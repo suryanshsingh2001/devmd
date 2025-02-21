@@ -17,12 +17,16 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { LoadingOverlay } from "@/components/shared/loading-overlay";
 
 const formSchema = z.object({
   inputText: z
     .string()
     .min(1, "How about entering some text to convert?")
-    .max(5000, "Your plain text is too long. Please keep it under 5000 characters"),
+    .max(
+      5000,
+      "Your plain text is too long. Please keep it under 5000 characters"
+    ),
 });
 
 export default function Home() {
@@ -30,6 +34,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [showRaw, setShowRaw] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [showResult, setShowResult] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,6 +42,9 @@ export default function Home() {
       inputText: "",
     },
   });
+
+
+
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { inputText } = values;
@@ -62,6 +70,7 @@ export default function Home() {
 
       const data = await response.json();
       setMarkdown(data.markdown);
+      setShowResult(true);
       toast.success("Text converted to markdown successfully");
     } catch (error: any) {
       toast.error(error.message);
@@ -82,7 +91,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
-      <div className="max-w-7xl mx-auto space-y-8">
+      {loading && <LoadingOverlay loading={loading} />}
+      <div className="max-w-5xl mx-auto space-y-8">
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
             Plain Text to Markdown Converter
@@ -93,93 +103,95 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card className="p-6 space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <FileText className="w-5 h-5 text-blue-500" />
-              <h2 className="text-xl font-semibold">Input Text</h2>
-            </div>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
-              >
-                <FormField
-                  control={form.control}
-                  name="inputText"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <div className="relative">
-                          <Textarea
-                            placeholder="Paste your plain text here..."
-                            className="min-h-[700px] resize-none pr-16"
-                            {...field}
-                          />
-                          <div className="absolute bottom-2 right-2 text-sm text-gray-500">
-                            {field.value.length}/5000
-                          </div>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="submit"
-                  className="w-full"
-                  size="lg"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    "Converting..."
-                  ) : (
-                    <>
-                      Convert to Markdown
-                      <Wand2 className="h-4 w-4 ml-2" />
-                    </>
-                  )}
-                </Button>
-              </form>
-            </Form>
-          </Card>
-
-          <Card className="p-6  space-y-4">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <BookMarked className="w-5 h-5 text-green-500" />
-                <h2 className="text-xl font-semibold">Markdown Output</h2>
+        <div className="flex flex-col space-y-8">
+          {!showResult ? (
+            <Card className="p-6 space-y-4">
+              <div className="flex items-center gap-2 mb-4">
+                <FileText className="w-5 h-5 text-blue-500" />
+                <h2 className="text-xl font-semibold">Input Text</h2>
               </div>
-              {markdown && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={copyToClipboard}
-                  className="flex items-center gap-2"
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-4"
                 >
-                  <Copy className="h-4 w-4" />
-                  Copy
+                  <FormField
+                    control={form.control}
+                    name="inputText"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <div className="relative">
+                            <Textarea
+                              placeholder="Paste your plain text here..."
+                              className="min-h-[700px] resize-none pr-16"
+                              {...field}
+                            />
+                            <div className="absolute bottom-2 right-2 text-sm text-gray-500">
+                              {field.value.length}/5000
+                            </div>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    size="lg"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      "Converting..."
+                    ) : (
+                      <>
+                        Convert to Markdown
+                        <Wand2 className="h-4 w-4 ml-2" />
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </Form>
+            </Card>
+          ) : (
+            <Card className="p-3 space-y-4">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <BookMarked className="w-5 h-5 text-green-500" />
+                  <h2 className="text-xl font-semibold">Markdown Output</h2>
+                </div>
+                {markdown && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={copyToClipboard}
+                    className="flex items-center gap-2"
+                  >
+                    <Copy className="h-4 w-4" />
+                    {isCopied ? "Copied!" : "Copy Markdown"}
+                  </Button>
+                )}
+              </div>
+              <div className="flex items-center gap-2 mb-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowRaw(!showRaw)}
+                  className="text-sm"
+                >
+                  {showRaw ? "Show Rendered" : "Show Raw"}
                 </Button>
-              )}
-            </div>
-            <div className="flex items-center gap-2 mb-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowRaw(!showRaw)}
-                className="text-sm"
-              >
-                {showRaw ? "Show Rendered" : "Show Raw"}
-              </Button>
-            </div>
-            <div className="min-h-[400px] bg-gray-50 dark:bg-gray-900 rounded-md p-4 overflow-auto">
-              {markdown ? (
-                showRaw ? (
-                  <pre className="text-sm font-mono whitespace-pre-wrap">
-                    {markdown}
-                  </pre>
-                ) : (
-                  <ReactMarkdown
+
+              </div>
+              <div className="min-h-[400px] bg-gray-50 dark:bg-gray-900 rounded-md p-4 overflow-auto">
+                {markdown ? (
+                  showRaw ? (
+                    <pre className="text-sm font-mono whitespace-pre-wrap">
+                      {markdown}
+                    </pre>
+                  ) : (
+                    <ReactMarkdown
                     components={{
                       h1: ({ children }) => (
                         <h1 className="text-3xl font-bold my-6 border-b pb-2">
@@ -251,14 +263,22 @@ export default function Home() {
                   >
                     {markdown}
                   </ReactMarkdown>
-                )
-              ) : (
-                <p className="text-gray-500 dark:text-gray-400 text-center mt-32">
-                  No markdown to display.
-                </p>
-              )}
-            </div>
-          </Card>
+
+
+
+                   
+                  )
+                ) : (
+                  <p className="text-gray-500 dark:text-gray-400 text-center mt-32">
+                    No markdown to display.
+                  </p>
+                )}
+              </div>
+              <Button className="w-full" size="lg" onClick={() => setShowResult(false)}>
+                Try Again
+              </Button>
+            </Card>
+          )}
         </div>
       </div>
     </main>

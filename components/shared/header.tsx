@@ -14,8 +14,8 @@ import { config } from "@/config";
 
 const Header = () => {
   return (
-    <header className="border-b">
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <header className="border-b backdrop-blur-sm bg-white/75 sticky top-0 z-50">
+      <nav className="mx-auto max-w-5xl px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
@@ -27,23 +27,23 @@ const Header = () => {
                 height={32}
                 className=""
               />
-              <span className="text-2xl font-bold">MarkdownAI</span>
+              <span className="text-2xl font-bold">{config.name}</span>
             </Link>
           </div>
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-4">
             <Link href={config.peerlistLink}>
-            <Button variant="outline" size="sm" className="hidden sm:flex">
-              <Image
-                src="/peerlist.svg"
-                alt="Upvote"
-                width={24}
-                height={24}
-                className=""
-              />
-              Upvote on Peerlist
-            </Button>
+              <Button variant="outline" size="sm" className="hidden sm:flex">
+                <Image
+                  src="/peerlist.svg"
+                  alt="Upvote"
+                  width={24}
+                  height={24}
+                  className=""
+                />
+                Upvote on Peerlist
+              </Button>
             </Link>
             <Link href={config.githubLink}>
               <Button variant="outline" size="sm" className="hidden sm:flex">
@@ -55,9 +55,9 @@ const Header = () => {
             {/* Mobile Navigation (Sheet/Drawer) */}
             <div className="sm:hidden">
               <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Menu className="h-5 w-5" />
+                <SheetTrigger asChild className="p-2">
+                  <Button variant="ghost" size="lg">
+                    <Menu className="size-12" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right">
@@ -65,14 +65,24 @@ const Header = () => {
                     <SheetTitle>MarkdownAI</SheetTitle>
                   </SheetHeader>
                   <div className="flex flex-col gap-4 mt-6">
-                    <Button variant="outline" className="w-full">
-                      <ThumbsUp className="h-4 w-4 mr-2" />
-                      Upvote Project
-                    </Button>
-                    <Button variant="outline" className="w-full">
-                      <Github className="h-4 w-4 mr-2" />
-                      Source Code
-                    </Button>
+                    <Link href={config.peerlistLink}>
+                      <Button variant="outline" className="w-full">
+                        <Image
+                          src="/peerlist.svg"
+                          alt="Upvote"
+                          width={24}
+                          height={24}
+                          className="mr-2"
+                        />
+                        Upvote on Peerlist
+                      </Button>
+                    </Link>
+                    <Link href={config.githubLink}>
+                      <Button variant="outline" className="w-full">
+                        <Github className="h-4 w-4 mr-2" />
+                        Source Code
+                      </Button>
+                    </Link>
                   </div>
                 </SheetContent>
               </Sheet>
