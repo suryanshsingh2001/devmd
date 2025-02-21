@@ -1,31 +1,17 @@
 "use client"
 import { MultiStepLoader } from "../ui/multi-step-loader";
+import { CONVERT_LOADING_STATES } from "@/lib/constants";
 
 interface LoadingOverlayProps {
   loading: boolean;
+  loadingState : any
 }
-export function LoadingOverlay({ loading = false }: LoadingOverlayProps) {
+export function LoadingOverlay({ loading = false, loadingState = CONVERT_LOADING_STATES }: LoadingOverlayProps) {
   return (
     <MultiStepLoader
       loading={loading}
       loop
-      loadingStates={[
-        {
-          text: "Converting your text... 📝",
-        },
-        {
-          text: "Teaching AI proper grammar... 🎓",
-        },
-        {
-          text: "Adding markdown magic... ✨",
-        },
-        {
-          text: "Making it dev.to friendly... 🚀",
-        },
-        {
-          text: "Almost there! ⚡",
-        },
-      ]}
+      loadingStates={loadingState}
     />
   );
 }

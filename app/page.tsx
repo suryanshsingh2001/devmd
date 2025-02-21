@@ -14,6 +14,8 @@ import {
   Check,
   CheckCircle,
   CheckCircle2,
+  Cross,
+  X,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
@@ -31,12 +33,13 @@ import { LoadingOverlay } from "@/components/shared/loading-overlay";
 import { RainbowButton } from "@/components/magicui/rainbow-button";
 import { AuroraText } from "@/components/magicui/aurora-text";
 
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import UrlInputDialog from "@/components/shared/url-input-dialog";
+import { CONVERT_LOADING_STATES, EXTRACT_LOADING_STATES } from "@/lib/constants";
 
 const formSchema = z.object({
   inputText: z
     .string()
-    .min(1, "How about entering some text to convert?")
+    .min(500, "Your plain text is too short. Please enter at least 500 characters")
     .max(
       5000,
       "Your plain text is too long. Please keep it under 5000 characters"
@@ -49,6 +52,7 @@ export default function Home() {
   const [showRaw, setShowRaw] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [isExtracting, setIsExtracting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -100,16 +104,43 @@ export default function Home() {
     }
   };
 
+  const handleUrlSubmit = async (url: string) => {
+    setLoading(true);
+    setIsExtracting(true);
+    try {
+      const response = await fetch('/api/scrap', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url })
+      });
+      const data = await response.json();
+      
+      if (data.success) {
+        form.setValue('inputText', data.data);
+        toast.success("Text extracted from URL successfully");
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Failed to fetch content");
+    } finally {
+      setLoading(false);
+      setIsExtracting(false);
+    } 
+  };
+
   return (
     <main className="min-h-screen  py-12 px-4">
-      {loading && <LoadingOverlay loading={loading} />}
+      {loading && <LoadingOverlay loadingState={isExtracting ? EXTRACT_LOADING_STATES : CONVERT_LOADING_STATES} loading={loading} />}
       <div className="max-w-5xl mx-auto space-y-8">
         <div className="text-pretty tracking-tight text-center space-y-4">
           <h2 className="text-4xl font-bold  ">
             Medium to <AuroraText> Dev.to </AuroraText> Converter
           </h2>
           <p className="text-muted-foreground text-lg mx-auto max-w-2xl ">
-            Transform your Medium articles into Dev.to-compatible markdown
+            Transform your Medium/Peerlist articles into Dev.to-compatible markdown
             format in seconds.
           </p>
         </div>
@@ -119,7 +150,20 @@ export default function Home() {
             <Card className="p-4 space-y-4">
               <div className="flex items-center gap-2 mb-4">
                 <FileText className="w-5 h-5 text-blue-500" />
-                <h2 className="text-xl font-semibold">Input Text</h2>
+                <h2 className="text-xl font-semibold">Plain Text</h2>
+              </div>
+
+
+              <div className="flex items-center gap-2">
+               <UrlInputDialog onSubmit={handleUrlSubmit} loading={loading} />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => form.setValue("inputText", "")}
+                >
+                  <X className="w-5 h-5" />
+                  <span className="">Clear Text</span>
+                </Button>
               </div>
               <Form {...form}>
                 <form
