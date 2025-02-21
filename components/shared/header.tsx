@@ -15,7 +15,7 @@ import { config } from "@/config";
 const Header = () => {
   return (
     <header className="border-b">
-      <nav className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
