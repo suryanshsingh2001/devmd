@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { FileText, ArrowRight, Copy, Wand2, BookMarked } from "lucide-react";
+import { FileText, ArrowRight, Copy, Wand2, BookMarked , AlertCircle, Check, CheckCircle, CheckCircle2} from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
@@ -20,6 +20,8 @@ import {
 import { LoadingOverlay } from "@/components/shared/loading-overlay";
 import { RainbowButton } from "@/components/magicui/rainbow-button";
 import { AuroraText } from "@/components/magicui/aurora-text";
+
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 const formSchema = z.object({
   inputText: z
@@ -89,14 +91,14 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
+    <main className="min-h-screen  py-12 px-4">
       {loading && <LoadingOverlay loading={loading} />}
       <div className="max-w-5xl mx-auto space-y-8">
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-            Medium to <AuroraText> Dev.to </AuroraText> Converter ✨
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <div className="text-pretty text-center mx-auto tracking-wide space-y-4">
+          <h2 className="text-4xl font-bold ">
+            Medium to <AuroraText> Dev.to </AuroraText> Converter
+          </h2>
+          <p className="text-muted-foreground text-lg mx-auto max-w-2xl ">
             Transform your Medium articles into Dev.to-compatible markdown
             format in seconds.
           </p>
@@ -118,26 +120,36 @@ export default function Home() {
                     control={form.control}
                     name="inputText"
                     render={({ field }) => (
-                      <FormItem>
+                        <FormItem>
+                          <FormMessage className="" />
                         <FormControl>
                           <div className="relative">
                             <Textarea
                               placeholder="Paste your plain text here..."
-                              className="min-h-[700px] resize-none pr-16"
+                              className={`min-h-[700px] resize-none pr-16 ${
+                                form.formState.errors.inputText
+                                  ? " focus-visible:ring-red-500"
+                                  : ""
+                              }`}
                               {...field}
                             />
-                            <div className="absolute bottom-2 right-2 text-sm text-gray-500">
+                            <div
+                              className={`absolute bottom-2 right-2 text-sm ${
+                                field.value.length > 5000
+                                  ? "text-red-500"
+                                  : "text-gray-500"
+                              }`}
+                            >
                               {field.value.length}/5000
                             </div>
                           </div>
                         </FormControl>
-                        <FormMessage />
                       </FormItem>
                     )}
                   />
                   <RainbowButton
                     type="submit"
-                    className="w-full mt-4"
+                    className="w-full text-background bg-foreground"
                     disabled={loading}
                   >
                     {loading ? "Converting..." : <>Convert to Markdown</>}
@@ -153,15 +165,24 @@ export default function Home() {
                   <h2 className="text-xl font-semibold">Markdown Output</h2>
                 </div>
                 {markdown && (
-                  <Button
+                    <Button
                     variant="outline"
                     size="sm"
                     onClick={copyToClipboard}
                     className="flex items-center gap-2"
-                  >
-                    <Copy className="h-4 w-4" />
-                    {isCopied ? "Copied!" : "Copy Markdown"}
-                  </Button>
+                    >
+                    {isCopied ? (
+                      <>
+                      <CheckCircle2 className="w-5 h-5 text-green-500" />
+                      <span className="text-green-500">Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                      <Copy className="w-5 h-5 text-primary" />
+                      <span className="">Copy to clipboard</span>
+                      </>
+                    )}
+                    </Button>
                 )}
               </div>
               <div className="flex items-center gap-2 mb-4">

@@ -16,7 +16,7 @@ import { ModeToggle } from "./theme-toggle";
 const Header = () => {
   
   return (
-    <header className="border-b backdrop-blur-sm bg-white/75 sticky top-0 z-50">
+    <header className="bg-background/75">
       <nav className="mx-auto max-w-5xl px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}

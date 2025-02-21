@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { ArrowRight, Copy, FileText, Wand2 } from "lucide-react";
 import Header from "@/components/shared/header";
 import { config } from "@/config";
 import Footer from "@/components/shared/footer";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+
 const poppinSans = Poppins({
   weight: "400",
   variable: "--font-poppins-sans",
@@ -42,18 +42,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${poppinSans.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${poppinSans.variable} antialiased bg-background`}>
         <ThemeProvider
           attribute={"class"}
-          enableSystem
+          defaultTheme="dark"
           disableTransitionOnChange
-        />
-        <Toaster position="top-center" richColors />
-        <Header />
-        {children}
+        >
+          <Toaster position="top-center" richColors />
+          <Header />
+          {children}
 
-        <Footer />
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

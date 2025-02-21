@@ -3,12 +3,14 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const RATE_LIMIT_ENABLED = process.env.RATE_LIMIT_ENABLED === "true";
+console.log("RATE_LIMIT_ENABLED", RATE_LIMIT_ENABLED);
 
 export async function POST(req: Request) {
   try {
     const decision = await aj.protect(req);
 
-    if (decision.isDenied()) {
+    if (decision.isDenied() && RATE_LIMIT_ENABLED) {
       const timeLeft = decision.ttl;
 
       return NextResponse.json(
