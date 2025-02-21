@@ -4,7 +4,17 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { FileText, ArrowRight, Copy, Wand2, BookMarked , AlertCircle, Check, CheckCircle, CheckCircle2} from "lucide-react";
+import {
+  FileText,
+  ArrowRight,
+  Copy,
+  Wand2,
+  BookMarked,
+  AlertCircle,
+  Check,
+  CheckCircle,
+  CheckCircle2,
+} from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
@@ -94,8 +104,8 @@ export default function Home() {
     <main className="min-h-screen  py-12 px-4">
       {loading && <LoadingOverlay loading={loading} />}
       <div className="max-w-5xl mx-auto space-y-8">
-        <div className="text-pretty text-center mx-auto tracking-wide space-y-4">
-          <h2 className="text-4xl font-bold ">
+        <div className="text-pretty tracking-tight text-center space-y-4">
+          <h2 className="text-4xl font-bold  ">
             Medium to <AuroraText> Dev.to </AuroraText> Converter
           </h2>
           <p className="text-muted-foreground text-lg mx-auto max-w-2xl ">
@@ -106,7 +116,7 @@ export default function Home() {
 
         <div className="flex flex-col space-y-8">
           {!showResult ? (
-            <Card className="p-6 space-y-4">
+            <Card className="p-4 space-y-4">
               <div className="flex items-center gap-2 mb-4">
                 <FileText className="w-5 h-5 text-blue-500" />
                 <h2 className="text-xl font-semibold">Input Text</h2>
@@ -114,14 +124,14 @@ export default function Home() {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-4"
+                  className="space-y-8"
                 >
                   <FormField
                     control={form.control}
                     name="inputText"
                     render={({ field }) => (
-                        <FormItem>
-                          <FormMessage className="" />
+                      <FormItem>
+                        <FormMessage className="" />
                         <FormControl>
                           <div className="relative">
                             <Textarea
@@ -149,7 +159,7 @@ export default function Home() {
                   />
                   <RainbowButton
                     type="submit"
-                    className="w-full text-background bg-foreground"
+                    className="w-full  text-background bg-foreground"
                     disabled={loading}
                   >
                     {loading ? "Converting..." : <>Convert to Markdown</>}
@@ -165,24 +175,24 @@ export default function Home() {
                   <h2 className="text-xl font-semibold">Markdown Output</h2>
                 </div>
                 {markdown && (
-                    <Button
+                  <Button
                     variant="outline"
                     size="sm"
                     onClick={copyToClipboard}
                     className="flex items-center gap-2"
-                    >
+                  >
                     {isCopied ? (
                       <>
-                      <CheckCircle2 className="w-5 h-5 text-green-500" />
-                      <span className="text-green-500">Copied!</span>
+                        <CheckCircle2 className="w-5 h-5 text-green-500" />
+                        <span className="text-green-500">Copied!</span>
                       </>
                     ) : (
                       <>
-                      <Copy className="w-5 h-5 text-primary" />
-                      <span className="">Copy to clipboard</span>
+                        <Copy className="w-5 h-5 text-primary" />
+                        <span className="">Copy to clipboard</span>
                       </>
                     )}
-                    </Button>
+                  </Button>
                 )}
               </div>
               <div className="flex items-center gap-2 mb-4">

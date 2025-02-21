@@ -14,9 +14,8 @@ import { config } from "@/config";
 import { ModeToggle } from "./theme-toggle";
 
 const Header = () => {
-  
   return (
-    <header className="bg-background/75">
+    <header className="bg-background/75 my-2">
       <nav className="mx-auto max-w-5xl px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -24,10 +23,10 @@ const Header = () => {
             <Link href="/" className="flex items-center gap-2">
               <Image
                 src="/logo.svg"
-                alt="MarkdownAI"
-                width={32}
-                height={32}
-                className=""
+                alt="DevMD"
+                width={36}
+                height={36}
+                className="dark:bg-white rounded-sm  p-1"
               />
               <span className="text-2xl font-bold">{config.name}</span>
             </Link>
@@ -47,12 +46,12 @@ const Header = () => {
                 Upvote on Peerlist
               </Button>
             </Link>
-            <Link href={config.githubLink}>
+            {/* <Link href={config.githubLink}>
               <Button variant="outline" size="sm" className="hidden sm:flex">
                 <Github className="h-4 w-4" />
                 Source Code
               </Button>
-            </Link>
+            </Link> */}
 
             <ModeToggle />
 
@@ -65,8 +64,18 @@ const Header = () => {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right">
-                  <SheetHeader>
-                    <SheetTitle>MarkdownAI</SheetTitle>
+                  <SheetHeader className="flex-shrink-0">
+                    <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                    <Link href="/" className="flex items-center gap-2">
+                      <Image
+                        src="/logo.svg"
+                        alt="DevMD"
+                        width={36}
+                        height={36}
+                        className="dark:bg-white rounded-sm  p-1"
+                      />
+                      <span className="text-2xl font-bold">{config.name}</span>
+                    </Link>
                   </SheetHeader>
                   <div className="flex flex-col gap-4 mt-6">
                     <Link href={config.peerlistLink}>

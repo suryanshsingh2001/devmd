@@ -6,6 +6,7 @@ import Header from "@/components/shared/header";
 import { config } from "@/config";
 import Footer from "@/components/shared/footer";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+import Banner from "@/components/shared/banner";
 
 const poppinSans = Poppins({
   weight: "400",
@@ -49,11 +50,13 @@ export default function RootLayout({
           defaultTheme="dark"
           disableTransitionOnChange
         >
+
           <Toaster position="top-center" richColors />
           <Header />
           {children}
 
           <Footer />
+
         </ThemeProvider>
       </body>
     </html>
