@@ -13,9 +13,7 @@ import { FileText } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  
-} from "@/components/ui/drawer";
+import {} from "@/components/ui/drawer";
 import {
   Form,
   FormControl,
@@ -25,7 +23,14 @@ import {
 } from "@/components/ui/form";
 import Image from "next/image";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger, DrawerDescription } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  DrawerDescription,
+} from "@/components/ui/drawer";
 
 const formSchema = z.object({
   url: z
@@ -119,7 +124,10 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
               </div>
             </DrawerHeader>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+              <form
+                onSubmit={form.handleSubmit(handleSubmit)}
+                className="space-y-6"
+              >
                 <FormField
                   control={form.control}
                   name="url"
@@ -149,7 +157,6 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
         </DrawerContent>
       </Drawer>
     );
-    
   }
   return (
     <Dialog open={open} onOpenChange={setOpen}>
