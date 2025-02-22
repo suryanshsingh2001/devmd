@@ -16,6 +16,8 @@ import {
   CheckCircle2,
   Cross,
   X,
+  Download,
+  FileCheck,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
@@ -34,12 +36,18 @@ import { RainbowButton } from "@/components/magicui/rainbow-button";
 import { AuroraText } from "@/components/magicui/aurora-text";
 
 import UrlInputDialog from "@/components/shared/url-input-dialog";
-import { CONVERT_LOADING_STATES, EXTRACT_LOADING_STATES } from "@/lib/constants";
+import {
+  CONVERT_LOADING_STATES,
+  EXTRACT_LOADING_STATES,
+} from "@/lib/constants";
 
 const formSchema = z.object({
   inputText: z
     .string()
-    .min(500, "Your plain text is too short. Please enter at least 500 characters")
+    .min(
+      500,
+      "Your plain text is too short. Please enter at least 500 characters"
+    )
     .max(
       5000,
       "Your plain text is too long. Please keep it under 5000 characters"
@@ -108,17 +116,17 @@ export default function Home() {
     setLoading(true);
     setIsExtracting(true);
     try {
-      const response = await fetch('/api/scrap', {
-        method: 'POST',
+      const response = await fetch("/api/scrap", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url })
+        body: JSON.stringify({ url }),
       });
       const data = await response.json();
-      
+
       if (data.success) {
-        form.setValue('inputText', data.data);
+        form.setValue("inputText", data.data);
         toast.success("Text extracted from URL successfully");
       } else {
         throw new Error(data.error);
@@ -128,20 +136,50 @@ export default function Home() {
     } finally {
       setLoading(false);
       setIsExtracting(false);
-    } 
+    }
+  };
+
+  const exportFile = async () => {
+    try {
+      // Use the markdown state instead of form values since that contains the converted content
+      if (!markdown) {
+        toast.error("No markdown content to export");
+        return;
+      }
+
+      const blob = new Blob([markdown], { type: "text/markdown" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "devto-article.md";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success("Markdown file exported successfully");
+    } catch (error) {
+      toast.error("Failed to export markdown file");
+    }
   };
 
   return (
     <main className="min-h-screen  py-12 px-4">
-      {loading && <LoadingOverlay loadingState={isExtracting ? EXTRACT_LOADING_STATES : CONVERT_LOADING_STATES} loading={loading} />}
+      {loading && (
+        <LoadingOverlay
+          loadingState={
+            isExtracting ? EXTRACT_LOADING_STATES : CONVERT_LOADING_STATES
+          }
+          loading={loading}
+        />
+      )}
       <div className="max-w-5xl mx-auto space-y-8">
         <div className="text-pretty tracking-tight text-center space-y-4">
           <h2 className="text-4xl font-bold  ">
             Medium to <AuroraText> Dev.to </AuroraText> Converter
           </h2>
           <p className="text-muted-foreground text-lg mx-auto max-w-2xl ">
-            Transform your Medium/Peerlist articles into Dev.to-compatible markdown
-            format in seconds.
+            Transform your Medium/Peerlist articles into Dev.to-compatible
+            markdown format in seconds.
           </p>
         </div>
 
@@ -153,9 +191,8 @@ export default function Home() {
                 <h2 className="text-xl font-semibold">Plain Text</h2>
               </div>
 
-
               <div className="flex items-center gap-2">
-               <UrlInputDialog onSubmit={handleUrlSubmit} loading={loading} />
+                <UrlInputDialog onSubmit={handleUrlSubmit} loading={loading} />
                 <Button
                   variant="outline"
                   size="sm"
@@ -215,28 +252,39 @@ export default function Home() {
             <Card className="p-3 space-y-4">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <BookMarked className="w-5 h-5 text-green-500" />
-                  <h2 className="text-xl font-semibold">Markdown Output</h2>
+                  <FileCheck className="w-5 h-5 text-green-500" />
+                  <h2 className="text-xl font-semibold">Result</h2>
                 </div>
                 {markdown && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={copyToClipboard}
-                    className="flex items-center gap-2"
-                  >
-                    {isCopied ? (
-                      <>
-                        <CheckCircle2 className="w-5 h-5 text-green-500" />
-                        <span className="text-green-500">Copied!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-5 h-5 text-primary" />
-                        <span className="">Copy to clipboard</span>
-                      </>
-                    )}
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={exportFile}
+                      className="flex items-center gap-2"
+                    >
+                      <Download className="w-5 h-5" />
+                      <span>Export</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={copyToClipboard}
+                      className="flex items-center gap-2"
+                    >
+                      {isCopied ? (
+                        <>
+                          <CheckCircle2 className="w-5 h-5 text-green-500" />
+                          <span className="text-green-500">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-5 h-5 text-primary" />
+                          <span className="">Copy to clipboard</span>
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 )}
               </div>
               <div className="flex items-center gap-2 mb-4">
