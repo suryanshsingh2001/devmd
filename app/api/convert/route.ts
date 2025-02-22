@@ -43,7 +43,7 @@ export async function POST(req: Request) {
   ${text}`;
 
     const result = await model.generateContent(prompt);
-    const response = await result.response;
+    const response =  result.response;
     const markdown = response.text();
 
     return NextResponse.json({ markdown });
