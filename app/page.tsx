@@ -124,16 +124,24 @@ export default function Home() {
         },
         body: JSON.stringify({ url }),
       });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData);
+        throw new Error(errorData.text );
+      }
+      
       const data = await response.json();
+      console.log(data);
+
+      
 
       if (data.success) {
         form.setValue("inputText", data.data);
         toast.success("Text extracted from URL successfully");
-      } else {
-        throw new Error(data.error);
-      }
+      } 
+      
     } catch (error: any) {
-      toast.error(error.message || "Failed to fetch content");
+      toast.error(error.message || "Failed to extract text from URL");
     } finally {
       setLoading(false);
       setIsExtracting(false);

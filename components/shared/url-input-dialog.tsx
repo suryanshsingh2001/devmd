@@ -31,28 +31,8 @@ import {
   DrawerTrigger,
   DrawerDescription,
 } from "@/components/ui/drawer";
+import { toast } from "sonner";
 
-const formSchema = z.object({
-  url: z
-    .string()
-    .url("Please enter a valid URL")
-    .refine(
-      (url) => {
-        //TODO: Enable Medium URL , right now only Peerlist URL is allowed.
-        const ismedium =
-          url.startsWith("https://medium.com/") || url.endsWith("medium.com");
-        const ispeerlist = url.match(
-          /https:\/\/peerlist\.io\/.*\/articles\/.*/
-        );
-        return ispeerlist;
-      },
-      {
-        message: "Please enter a Peerlist article URL",
-      }
-    ),
-});
-
-type FormValues = z.infer<typeof formSchema>;
 
 interface UrlInputDialogProps {
   onSubmit: (url: string) => Promise<void>;
@@ -62,6 +42,30 @@ interface UrlInputDialogProps {
 const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
   const [open, setOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 640px)");
+  const [fromMedium, setFromMedium] = useState(false);
+
+  type FormValues = z.infer<typeof formSchema>;
+
+  const formSchema = z.object({
+    url: z
+      .string()
+      .url("Please enter a valid URL")
+      .refine(
+        (url) => {
+          //TODO: Enable Medium URL , right now only Peerlist URL is allowed.
+          const ismedium =
+            url.startsWith("https://medium.com/") || url.endsWith("medium.com");
+          setFromMedium(ismedium);
+          const ispeerlist = url.match(
+            /https:\/\/peerlist\.io\/.*\/articles\/.*/
+          );
+          return ispeerlist || ismedium;
+        },
+        {
+          message: "Please enter a Peerlist article URL",
+        }
+      ),
+  });
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -71,6 +75,9 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
   });
 
   const handleSubmit = async (values: FormValues) => {
+    if(fromMedium){
+      return toast.error("Medium URL is not supported yet.");
+    }
     await onSubmit(values.url);
     form.reset();
     setOpen(false);
@@ -116,7 +123,7 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
               </div>
               <div className="text-center space-y-2">
                 <DrawerTitle className="text-2xl font-semibold">
-                  Import from Medium or Peerlist
+                  Import a Peerlist Article
                 </DrawerTitle>
                 <DrawerDescription className="text-muted-foreground text-sm">
                   Enter the URL of the article you want to import
@@ -196,7 +203,7 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
           </div>
           <div className="text-center space-y-2">
             <DialogTitle className="text-2xl font-semibold">
-              Import from Medium or Peerlist
+              Import a Peerlist Article
             </DialogTitle>
             <DialogDescription className="text-muted-foreground text-sm">
               Enter the URL of the article you want to import

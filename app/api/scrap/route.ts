@@ -1,8 +1,26 @@
 import { NextResponse } from "next/server";
 import * as cheerio from "cheerio";
+import aj from "@/lib/arcjet";
+
+const RATE_LIMIT_ENABLED = process.env.RATE_LIMIT_ENABLED === "true";
 
 export async function POST(request: Request) {
   try {
+    const decision = await aj.protect(request);
+
+    if (decision.isDenied() && RATE_LIMIT_ENABLED) {
+      const timeLeft = decision.ttl;
+      //convert to minutes
+      const minutesTimeLeft = Math.floor(timeLeft / 60);
+
+
+      return NextResponse.json(
+        {
+          text: `Slow down! You're going too fast. Please wait ${minutesTimeLeft} minutes before trying again.`,
+        },
+        { status: 429 }
+      );
+    }
     const { url } = await request.json();
 
     if (!url) {
