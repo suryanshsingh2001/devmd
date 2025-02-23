@@ -33,7 +33,9 @@ export function FaqDialog() {
     return (
       <Drawer>
         <DrawerTrigger asChild>
-          <Button variant="outline">FAQ</Button>
+          <Button variant="outline">
+            <HelpCircle className="h-5 w-5" />
+          </Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
@@ -59,7 +61,9 @@ export function FaqDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">FAQ</Button>
+        <Button variant="ghost">
+          <HelpCircle className="h-5 w-5" />
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[600px] max-h-[80vh]">
         <DialogHeader>
