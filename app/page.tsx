@@ -40,6 +40,7 @@ import {
   CONVERT_LOADING_STATES,
   EXTRACT_LOADING_STATES,
 } from "@/lib/constants";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const formSchema = z.object({
   inputText: z
@@ -193,14 +194,16 @@ export default function Home() {
 
               <div className="flex items-center gap-2">
                 <UrlInputDialog onSubmit={handleUrlSubmit} loading={loading} />
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => form.setValue("inputText", "")}
-                >
-                  <X className="w-5 h-5" />
-                  <span className="">Clear Text</span>
-                </Button>
+
+                {form.watch("inputText") && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => form.setValue("inputText", "")}
+                  >
+                    <span className="text-red-500">Clear Text</span>
+                  </Button>
+                )}
               </div>
               <Form {...form}>
                 <form
@@ -212,7 +215,19 @@ export default function Home() {
                     name="inputText"
                     render={({ field }) => (
                       <FormItem>
-                        <FormMessage className="" />
+                        {form.formState.errors.inputText && (
+                          <Alert variant="destructive" className="text-red-500">
+                            <AlertTitle>
+                              <div className="flex items-center gap-2">
+                                <AlertCircle className="w-5 h-5" />
+                                <span className="text-sm">Too Short</span>
+                              </div>
+                            </AlertTitle>
+                            <AlertDescription>
+                              {form.formState.errors.inputText.message}
+                            </AlertDescription>
+                          </Alert>
+                        )}
                         <FormControl>
                           <div className="relative">
                             <Textarea
