@@ -26,15 +26,27 @@ export const metadata: Metadata = {
     siteName: config.name,
     title: config.name,
     description: config.description,
-    images: [
-      {
-        url: `${config.logo}`,
-        width: 1200,
-        height: 630,
-        alt: config.name,
-      },
-    ],
+    images: config.ogImage,
   },
+
+  robots: {
+    follow: true,
+    index: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    title: config.name,
+    card: "summary_large_image",
+    images: config.ogImage,
+  },
+  category: "Technology",
+  keywords: ["devmd", "dev.to", "medium", "markdown", "ai", "blog", "blogging"],
 };
 
 export default function RootLayout({
@@ -50,13 +62,11 @@ export default function RootLayout({
           defaultTheme="dark"
           disableTransitionOnChange
         >
-
           <Toaster position="top-center" richColors />
           <Header />
           {children}
 
           <Footer />
-
         </ThemeProvider>
       </body>
     </html>

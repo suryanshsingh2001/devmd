@@ -51,7 +51,7 @@ export const FAQs = [
   {
     question: "Can I import my Medium or Peerlist article?",
     answer:
-      "Support for Medium articles is coming soon! For now, you can import Peerlist articles by pasting the URL. DevMD will automatically fetch and convert the content for you.",
+      "Support for Medium articles is coming soon! For now, you can import Peerlist articles by pasting the URL.",
   },
   {
     question: "What AI model does DevMD use?",

@@ -23,11 +23,11 @@ const Header = () => {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-2">
               <Image
-                src="/logo.svg"
+                src="/logo.png"
                 alt="DevMD"
-                width={36}
-                height={36}
-                className="dark:bg-white rounded-sm  p-1"
+                width={52}
+                height={52}
+                className="rounded-md"
               />
               <span className="text-2xl font-bold">{config.name}</span>
             </Link>
@@ -66,18 +66,20 @@ const Header = () => {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right">
-                  <SheetHeader className="flex-shrink-0">
+                  <SheetHeader className="flex-shrink-0 items-center">
                     <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                    <Link href="/" className="flex items-center gap-2">
-                      <Image
-                        src="/logo.svg"
-                        alt="DevMD"
-                        width={36}
-                        height={36}
-                        className="dark:bg-white rounded-sm  p-1"
-                      />
-                      <span className="text-2xl font-bold">{config.name}</span>
-                    </Link>
+                      <Link href="/" className="flex items-center gap-2">
+                        <Image
+                          src="/logo.png"
+                          alt="DevMD"
+                          width={52}
+                          height={52}
+                          className="rounded-md"
+                        />
+                        <span className="text-2xl font-bold">
+                          {config.name}
+                        </span>
+                      </Link>
                   </SheetHeader>
                   <div className="flex flex-col gap-4 mt-6">
                     <Link href={config.peerlistLink}>
