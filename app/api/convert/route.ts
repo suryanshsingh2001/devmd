@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 const RATE_LIMIT_ENABLED = process.env.RATE_LIMIT_ENABLED === "true";
-console.log("RATE_LIMIT_ENABLED", RATE_LIMIT_ENABLED);
 
 export async function POST(req: Request) {
   try {

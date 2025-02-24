@@ -126,12 +126,10 @@ export default function Home() {
       });
       if (!response.ok) {
         const errorData = await response.json();
-        console.log(errorData);
         throw new Error(errorData.text );
       }
       
       const data = await response.json();
-      console.log(data);
 
       
 
