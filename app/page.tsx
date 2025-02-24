@@ -36,10 +36,7 @@ import { RainbowButton } from "@/components/magicui/rainbow-button";
 import { AuroraText } from "@/components/magicui/aurora-text";
 
 import UrlInputDialog from "@/components/shared/url-input-dialog";
-import {
-  CONVERT_LOADING_STATES,
-  EXTRACT_LOADING_STATES,
-} from "@/lib/constants";
+import { CONVERT_LOADING_STATES, LOADING_STATES } from "@/lib/constants";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const formSchema = z.object({
@@ -126,18 +123,18 @@ export default function Home() {
       });
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.text );
+        throw new Error(errorData.text);
       }
-      
-      const data = await response.json();
 
-      
+      const data = await response.json();
 
       if (data.success) {
         form.setValue("inputText", data.data);
-        toast.success("Text extracted from URL successfully");
-      } 
-      
+
+        // now run the onSubmit function to directly take to the markdown conversion
+
+        await onSubmit({ inputText: data.data });
+      }
     } catch (error: any) {
       toast.error(error.message || "Failed to extract text from URL");
     } finally {
@@ -173,9 +170,7 @@ export default function Home() {
     <main className="min-h-screen  py-12 px-4">
       {loading && (
         <LoadingOverlay
-          loadingState={
-            isExtracting ? EXTRACT_LOADING_STATES : CONVERT_LOADING_STATES
-          }
+          loadingState={isExtracting ? LOADING_STATES : CONVERT_LOADING_STATES}
           loading={loading}
         />
       )}
@@ -198,16 +193,27 @@ export default function Home() {
                 <h2 className="text-xl font-semibold">Plain Text</h2>
               </div>
 
-              <div className="flex items-center gap-2">
-                <UrlInputDialog onSubmit={handleUrlSubmit} loading={loading} />
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <UrlInputDialog
+                    onSubmit={handleUrlSubmit}
+                    loading={loading}
+                  />
+                </div>
+              </div>
 
+              <div className="flex  items-center gap-2 p-2">
+                <span className="text-muted-foreground text-lg  mx-auto">
+                  Or
+                </span>
                 {form.watch("inputText") && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => form.setValue("inputText", "")}
+                    className="text-red-500 hover:text-red-600"
                   >
-                    <span className="text-red-500">Clear Text</span>
+                    Clear Text
                   </Button>
                 )}
               </div>
@@ -221,24 +227,12 @@ export default function Home() {
                     name="inputText"
                     render={({ field }) => (
                       <FormItem>
-                        {form.formState.errors.inputText && (
-                          <Alert variant="destructive" className="text-red-500">
-                            <AlertTitle>
-                              <div className="flex items-center gap-2">
-                                <AlertCircle className="w-5 h-5" />
-                                <span className="text-sm">Too Short</span>
-                              </div>
-                            </AlertTitle>
-                            <AlertDescription>
-                              {form.formState.errors.inputText.message}
-                            </AlertDescription>
-                          </Alert>
-                        )}
+                        <FormMessage className="text-md text-red-600 text-center" />
                         <FormControl>
                           <div className="relative">
                             <Textarea
                               placeholder="Paste your plain text here..."
-                              className={`min-h-[700px] resize-none pr-16 ${
+                              className={`min-h-[500px] resize-none pr-16 ${
                                 form.formState.errors.inputText
                                   ? " focus-visible:ring-red-500"
                                   : ""
@@ -411,7 +405,10 @@ export default function Home() {
               <Button
                 className="w-full"
                 size="lg"
-                onClick={() => setShowResult(false)}
+                onClick={() => {
+                  form.setValue("inputText", "");
+                  setShowResult(false);
+                }}
               >
                 Try Again
               </Button>

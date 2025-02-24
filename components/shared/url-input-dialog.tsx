@@ -32,8 +32,7 @@ import {
   DrawerDescription,
 } from "@/components/ui/drawer";
 import { toast } from "sonner";
-
-
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 interface UrlInputDialogProps {
   onSubmit: (url: string) => Promise<void>;
   loading?: boolean;
@@ -59,11 +58,11 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
           if (ismedium) {
             toast.error("Medium URL is not supported yet.");
             return false;
-          }          
+          }
           const ispeerlist = url.match(
             /https:\/\/peerlist\.io\/.*\/articles\/.*/
           );
-          return ispeerlist ;
+          return ispeerlist;
         },
         {
           message: "Please enter a Peerlist article URL",
@@ -79,7 +78,7 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
   });
 
   const handleSubmit = async (values: FormValues) => {
-    if(fromMedium){
+    if (fromMedium) {
       return toast.error("Medium URL is not supported yet.");
     }
     await onSubmit(values.url);
@@ -90,11 +89,33 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
   if (isMobile) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerTrigger asChild>
-          <Button variant="ghost" size="sm" className="text-sm">
-            <FileText className="w-4 h-4 mr-2" />
-            Import from URL
-          </Button>
+        <DrawerTrigger className="flex mx-auto w-full max-w-md">
+          <Card className="cursor-pointer w-full">
+            <CardHeader>
+              <CardTitle className="text-md">
+          Import from Peerlist or Medium
+              </CardTitle>
+              <CardDescription>
+          Click here to import an article from Peerlist or Medium
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex gap-4 mx-auto justify-center">
+              <Image
+          src="/peerlist.svg"
+          alt="Peerlist"
+          width={48}
+          height={48}
+          className="rounded-lg"
+              />
+              <Image
+          src="/medium.svg"
+          alt="Medium"
+          width={48}
+          height={48}
+          className="rounded-lg bg-white p-1"
+              />
+            </CardContent>
+          </Card>
         </DrawerTrigger>
         <DrawerContent>
           <div className="mx-auto w-full max-w-md p-6">
@@ -171,11 +192,33 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
   }
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="text-sm">
-          <FileText className="w-4 h-4 mr-2" />
-          Import from URL
-        </Button>
+      <DialogTrigger className="flex mx-auto w-full max-w-md">
+        <Card className="cursor-pointer w-full">
+          <CardHeader>
+            <CardTitle className="text-md">
+              Import from Peerlist or Medium
+            </CardTitle>
+            <CardDescription>
+              Click here to import an article from Peerlist or Medium
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex gap-4 mx-auto justify-center">
+            <Image
+              src="/peerlist.svg"
+              alt="Peerlist"
+              width={48}
+              height={48}
+              className="rounded-lg"
+            />
+            <Image
+              src="/medium.svg"
+              alt="Medium"
+              width={48}
+              height={48}
+              className="rounded-lg bg-white p-1"
+            />
+          </CardContent>
+        </Card>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] gap-6">
         <DialogHeader className="flex flex-col items-center space-y-6">

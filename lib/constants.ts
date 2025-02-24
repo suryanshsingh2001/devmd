@@ -16,7 +16,7 @@ export const CONVERT_LOADING_STATES = [
   },
 ] as const;
 
-export const EXTRACT_LOADING_STATES = [
+export const LOADING_STATES = [
   {
     text: "Extracting content... 📄",
   },
@@ -31,6 +31,21 @@ export const EXTRACT_LOADING_STATES = [
   },
   {
     text: "Teaching the code some manners... 🎩",
+  },
+  {
+    text: "Fetching from Peerlist... 🌐",
+  },
+  {
+    text: "Converting your text... 📝",
+  },
+  {
+    text: "Teaching AI proper grammar... 🎓",
+  },
+  {
+    text: "Adding markdown magic... ✨",
+  },
+  {
+    text: "Making it dev.to friendly... 🚀",
   },
   {
     text: "Almost there! Hold onto your keyboards! ⚡",

@@ -24,22 +24,27 @@ export async function POST(req: Request) {
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `Convert the following text to professional markdown format optimized for dev.to.
-  Only use content from the provided text - do not add any additional content, text, or commentary.
+    const prompt = `DO NOT PARAPHRASE OR MODIFY THE CONTENT IN ANY WAY! Your task is ONLY to convert the text to markdown format.
 
-  Key requirements:
-  - Use appropriate heading levels (H1, H2, H3)
-  - Apply markdown syntax for emphasis and lists
-  - Maintain all URLs and image references exactly as provided
-  - Ensure proper spacing between sections
-  - Format code blocks with language-specific syntax highlighting
-  - Create readable paragraphs with clear breaks
-  - For lists, use bullet points or numbered lists as they appear in the original
-  - Add relevant tags only if explicitly mentioned in content
-  - For tables, use standard markdown table syntax with headers and aligned columns
+    STRICT REQUIREMENTS:
+    1. Keep ALL original content exactly as provided - word for word
+    2. Only add markdown syntax for formatting
+    3. DO NOT add, remove, or change any words
+    4. DO NOT summarize or rewrite anything
 
-  Text to convert:
-  ${text}`;
+    Convert using these markdown elements:
+    - Use appropriate heading levels (H1, H2, H3)
+    - Apply markdown syntax for emphasis and lists
+    - Keep all URLs and image references exactly as provided
+    - Maintain proper spacing between sections
+    - Format code blocks with language-specific syntax highlighting
+    - Create readable paragraphs with clear breaks
+    - For lists, use bullet points or numbered lists as they appear in the original
+    - Add relevant tags only if explicitly mentioned in content
+    - For tables, use standard markdown table syntax with headers and aligned columns
+
+    Text to convert (KEEP EXACTLY AS IS):
+    ${text}`;
 
     const result = await model.generateContent(prompt);
     const response =  result.response;
