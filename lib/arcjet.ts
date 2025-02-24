@@ -1,16 +1,17 @@
-import arcjet, {fixedWindow} from "@arcjet/next"
+import arcjet, { fixedWindow } from "@arcjet/next";
+
+const MAX_REQUESTS = Number(process.env.MAX_REQUESTS) ?? 20;
 
 const aj = arcjet({
-    key: process.env.ARCJET_KEY!,
-    characteristics: ["ip.src"], // track requests by IP address
-    rules: [
-      fixedWindow({
-        mode: "LIVE", // will block requests. Use "DRY_RUN" to log only
-        window: "86400s", // 1 day fixed window
-        max: 5, // allow a maximum of 100 requests
-      }),
-    ],
-  });
-
+  key: process.env.ARCJET_KEY!,
+  characteristics: ["ip.src"], // track requests by IP address
+  rules: [
+    fixedWindow({
+      mode: "LIVE", // will block requests. Use "DRY_RUN" to log only
+      window: "86400s", // 1 day fixed window
+      max: MAX_REQUESTS, // allow a maximum of 100 requests
+    }),
+  ],
+});
 
 export default aj;

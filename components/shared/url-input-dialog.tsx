@@ -56,10 +56,14 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
           const ismedium =
             url.startsWith("https://medium.com/") || url.endsWith("medium.com");
           setFromMedium(ismedium);
+          if (ismedium) {
+            toast.error("Medium URL is not supported yet.");
+            return false;
+          }          
           const ispeerlist = url.match(
             /https:\/\/peerlist\.io\/.*\/articles\/.*/
           );
-          return ispeerlist || ismedium;
+          return ispeerlist ;
         },
         {
           message: "Please enter a Peerlist article URL",
