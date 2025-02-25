@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
     const { text } = await req.json();
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const prompt = `DO NOT PARAPHRASE OR MODIFY THE CONTENT IN ANY WAY! Your task is ONLY to convert the text to markdown format.
 
