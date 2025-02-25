@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FileText } from "lucide-react";
+import { FileText, Info } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {} from "@/components/ui/drawer";
+import { DrawerFooter } from "@/components/ui/drawer";
 import {
   Form,
   FormControl,
@@ -32,7 +32,14 @@ import {
   DrawerDescription,
 } from "@/components/ui/drawer";
 import { toast } from "sonner";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "../ui/alert";
 interface UrlInputDialogProps {
   onSubmit: (url: string) => Promise<void>;
   loading?: boolean;
@@ -55,7 +62,7 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
           const ismedium =
             url.startsWith("https://medium.com/") || url.endsWith("medium.com");
           setFromMedium(ismedium);
-         
+
           const ispeerlist = url.match(
             /https:\/\/peerlist\.io\/.*\/articles\/.*/
           );
@@ -75,7 +82,6 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
   });
 
   const handleSubmit = async (values: FormValues) => {
-   
     await onSubmit(values.url);
     form.reset();
     setOpen(false);
@@ -88,26 +94,26 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
           <Card className="cursor-pointer w-full">
             <CardHeader>
               <CardTitle className="text-md">
-          Import from Peerlist or Medium
+                Import from Peerlist or Medium
               </CardTitle>
               <CardDescription>
-          Click here to import an article from Peerlist or Medium
+                Click here to import an article from Peerlist or Medium
               </CardDescription>
             </CardHeader>
             <CardContent className="flex gap-4 mx-auto justify-center">
               <Image
-          src="/peerlist.svg"
-          alt="Peerlist"
-          width={48}
-          height={48}
-          className="rounded-lg"
+                src="/peerlist.svg"
+                alt="Peerlist"
+                width={48}
+                height={48}
+                className="rounded-lg"
               />
               <Image
-          src="/medium.svg"
-          alt="Medium"
-          width={48}
-          height={48}
-          className="rounded-lg bg-white p-1"
+                src="/medium.svg"
+                alt="Medium"
+                width={48}
+                height={48}
+                className="rounded-lg bg-white p-1"
               />
             </CardContent>
           </Card>
@@ -171,6 +177,14 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
                     </FormItem>
                   )}
                 />
+                <Alert variant={"default"} className="flex items-center">
+                  <Info className="h-5 w-5" />
+                  <AlertDescription>
+                    Import features work best for shorter articles. For longer
+                    articles, we recommend using plain text.
+                  </AlertDescription>
+                </Alert>
+
                 <Button
                   type="submit"
                   className="w-full h-11 text-base font-medium transition-all hover:scale-[1.02]"
@@ -273,6 +287,13 @@ const UrlInputDialog = ({ onSubmit, loading = false }: UrlInputDialogProps) => {
                 </FormItem>
               )}
             />
+            <Alert variant={"default"} className="flex items-center">
+              <Info className="h-5 w-5" />
+              <AlertDescription>
+                Import features work best for shorter articles. For longer
+                articles, we recommend using plain text.
+              </AlertDescription>
+            </Alert>
             <Button
               type="submit"
               className="w-full h-11 text-base font-medium transition-all hover:scale-[1.02]"
