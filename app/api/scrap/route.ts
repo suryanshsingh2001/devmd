@@ -3,6 +3,7 @@ import * as cheerio from "cheerio";
 import aj from "@/lib/arcjet";
 
 const RATE_LIMIT_ENABLED = process.env.RATE_LIMIT_ENABLED === "true";
+const MAX_CHARACTERS = Number(process.env.NEXT_PUBLIC_MAX_CHARACTERS) || 5000;
 
 export async function POST(request: Request) {
   try {
@@ -12,7 +13,6 @@ export async function POST(request: Request) {
       const timeLeft = decision.ttl;
       //convert to minutes
       const minutesTimeLeft = Math.floor(timeLeft / 60);
-
 
       return NextResponse.json(
         {
@@ -44,6 +44,21 @@ export async function POST(request: Request) {
       content = $("article").text().trim();
     } else if (url.includes("peerlist.io")) {
       content = $(".peerlist-blog").text().trim();
+    }
+
+    // limit content to max characters
+    if (content.length > MAX_CHARACTERS) {
+      content = content.substring(0, MAX_CHARACTERS);
+    }
+
+    if (content === "") {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Failed to scrape content",
+        },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({

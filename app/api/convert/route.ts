@@ -50,6 +50,8 @@ export async function POST(req: Request) {
     const response =  result.response;
     const markdown = response.text();
 
+
+    console.log("Conversion result:", markdown);
     return NextResponse.json({ markdown });
   } catch (error) {
     console.error("Conversion error:", error);

@@ -39,6 +39,10 @@ import UrlInputDialog from "@/components/shared/url-input-dialog";
 import { CONVERT_LOADING_STATES, LOADING_STATES } from "@/lib/constants";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
+
+const MAX_CHARACTERS=Number(process.env.NEXT_PUBLIC_MAX_CHARACTERS) || 5000;
+console.log(MAX_CHARACTERS);
+
 const formSchema = z.object({
   inputText: z
     .string()
@@ -47,8 +51,8 @@ const formSchema = z.object({
       "Your plain text is too short. Please enter at least 500 characters"
     )
     .max(
-      5000,
-      "Your plain text is too long. Please keep it under 5000 characters"
+      MAX_CHARACTERS,
+      `Your plain text is too long. Please keep it under ${MAX_CHARACTERS} characters`
     ),
 });
 
@@ -246,7 +250,7 @@ export default function Home() {
                                   : "text-gray-500"
                               }`}
                             >
-                              {field.value.length}/5000
+                              {field.value.length}/{MAX_CHARACTERS}
                             </div>
                           </div>
                         </FormControl>
