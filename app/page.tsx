@@ -39,8 +39,7 @@ import UrlInputDialog from "@/components/shared/url-input-dialog";
 import { CONVERT_LOADING_STATES, LOADING_STATES } from "@/lib/constants";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-
-const MAX_CHARACTERS=Number(process.env.NEXT_PUBLIC_MAX_CHARACTERS) || 5000;
+const MAX_CHARACTERS = Number(process.env.NEXT_PUBLIC_MAX_CHARACTERS) || 5000;
 console.log(MAX_CHARACTERS);
 
 const formSchema = z.object({
@@ -167,6 +166,32 @@ export default function Home() {
       toast.success("Markdown file exported successfully");
     } catch (error) {
       toast.error("Failed to export markdown file");
+    }
+  };
+
+  const handlePublish = async () => {
+    try {
+      const response = await fetch("/api/publish", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ markdown, title: "My Dev.to Article" }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.text);
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success("Article published successfully");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to publish article");
     }
   };
 
@@ -410,11 +435,14 @@ export default function Home() {
                 className="w-full"
                 size="lg"
                 onClick={() => {
+
+                  handlePublish();
                   form.setValue("inputText", "");
                   setShowResult(false);
+                  
                 }}
               >
-                Try Again
+                Publish
               </Button>
             </Card>
           )}
