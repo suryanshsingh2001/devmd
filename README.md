@@ -7,7 +7,10 @@
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-latest-blue.svg)](https://ui.shadcn.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-<img width="1536" height="1024" alt="ChatGPT Image Oct 6, 2025, 09_22_08 PM" src="https://github.com/user-attachments/assets/a56a2153-0605-4117-86dc-68c2eb8537fb" />
+<img width="1536" height="1024" alt="ChatGPT Image Oct 6, 2025, 09_54_26 PM" src="https://github.com/user-attachments/assets/2a987ef4-4854-40e6-b9a5-826494b96817" />
+
+
+
 
 DevMD is a powerful open-source tool that helps content creators convert Medium or Peerlist blog posts into dev.to-ready Markdown — powered by **Google Gemini Flash**.
 Whether you're migrating your content or optimizing it for a new audience, DevMD ensures clean formatting, accurate conversion, and context retention.
@@ -47,13 +50,23 @@ Whether you're migrating your content or optimizing it for a new audience, DevMD
    # or
    yarn install
    ```
+   
+4. Add enviroment variables
+   ```
+   GEMINI_API_KEY=<GEMINI_API_KEY>
+   ARCJET_KEY=<ARCJET_KEY> # This is purely optional.
+   RATE_LIMIT_ENABLED=true # Turn this off for local enviroments
+   MAX_REQUESTS=20
+   NEXT_PUBLIC_MAX_CHARACTERS=5000
+   ```
+
 
 4. Start the development server:
    ```
    npm run dev
    # or
    yarn dev
-   ```
+   ```   
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
