@@ -55,7 +55,7 @@ Whether you're migrating your content or optimizing it for a new audience, DevMD
    ```
    GEMINI_API_KEY=<GEMINI_API_KEY>
    ARCJET_KEY=<ARCJET_KEY> # This is purely optional.
-   RATE_LIMIT_ENABLED=true # Turn this off for local enviroments
+   RATE_LIMIT_ENABLED=true # Set to 'false' to disable rate limiting in local development environments
    MAX_REQUESTS=20
    NEXT_PUBLIC_MAX_CHARACTERS=5000
    ```
