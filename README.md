@@ -374,6 +374,6 @@ This project is licensed under the [MIT License](LICENSE). Feel free to use, mod
 
 **Made with ❤️ by the DevMD community**
 
-[⬆ back to top](#devmd-)
+[⬆ back to top](#devmd)
 
 </div>
