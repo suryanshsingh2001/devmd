@@ -1,4 +1,7 @@
-# DevMD 🎨
+<div align="center">
+
+# DevMD 
+
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://devmd.surydev.site/)
 [![Next.js](https://img.shields.io/badge/Next.js-14.0-blueviolet.svg)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-18.0-blue.svg)](https://reactjs.org/)
@@ -7,187 +10,370 @@
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-latest-blue.svg)](https://ui.shadcn.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-<img width="1536" height="1024" alt="ChatGPT Image Oct 6, 2025, 09_54_26 PM" src="https://github.com/user-attachments/assets/2a987ef4-4854-40e6-b9a5-826494b96817" />
+**Transform your Medium and Peerlist articles into dev.to-ready Markdown with AI precision.**
 
+[Live Demo](https://devmd.surydev.site/) · [Report Bug](https://github.com/suryanshsingh2001/devmd/issues) · [Request Feature](https://github.com/suryanshsingh2001/devmd/issues) · [Contribute](CONTRIBUTING.md)
 
+<img width="1536" height="800" alt="DevMD Interface" src="https://github.com/user-attachments/assets/2a987ef4-4854-40e6-b9a5-826494b96817" />
 
+</div>
 
-DevMD is a powerful open-source tool that helps content creators convert Medium or Peerlist blog posts into dev.to-ready Markdown — powered by **Google Gemini Flash**.
-Whether you're migrating your content or optimizing it for a new audience, DevMD ensures clean formatting, accurate conversion, and context retention.
+---
 
+## 📖 About
+
+DevMD is an open-source tool that seamlessly converts Medium and Peerlist blog posts into dev.to-compatible Markdown format. Powered by **Google Gemini Flash**, DevMD ensures your content maintains its structure, readability, and context throughout the conversion process.
+
+Whether you're cross-posting content, migrating your blog, or optimizing articles for different platforms, DevMD streamlines the entire workflow with AI-powered intelligence.
+
+---
 
 ## ✨ Features
 
-1. **AI-Powered Conversion** – Uses Google’s Gemini Flash model to transform your Medium blog post into dev.to-friendly Markdown.  
-2. **Easy-to-Use Interface** – Paste your article, click convert, and you’re done.  
-3. **Peerlist Article Support** – Paste your Peerlist URL and import instantly.
-4. **Medium Article Support** - Paste your Medium URL and import instantly.
-5. **Accurate Formatting** – Maintains headings, paragraphs, and styling automatically.  
-6. **Open Source** – Contribute this Hacktoberfest to make DevMD even better!
+- 🤖 **AI-Powered Conversion** – Leverages Google's Gemini Flash for intelligent content transformation
+- 🔗 **URL Import Support** – Paste Medium or Peerlist URLs for instant content extraction
+- 📝 **Accurate Formatting** – Preserves headings, paragraphs, code blocks, and styling automatically
+- ⚡ **Lightning Fast** – Convert articles in seconds with optimized AI processing
+- 🎨 **Intuitive Interface** – Clean, modern design built with Next.js and shadcn/ui
+- 🛡️ **Rate Limiting** – Built-in Arcjet protection for fair usage and API sustainability
+- 🔓 **100% Open Source** – Transparent, community-driven development
 
-## 🚀 Getting Started
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Node.js** (v14 or later): Check your current version by running `node -v`.
-- **npm or yarn**: If you're using npm or Yarn, you can run `npm -v` or `yarn -v`.
+Before you begin, ensure you have:
+
+- **Node.js** v14 or later ([Download](https://nodejs.org/))
+- **npm** or **yarn** package manager
+- **Gemini API Key** from [Google AI Studio](https://makersuite.google.com/app/apikey)
+- **Arcjet Key** (optional) from [Arcjet Dashboard](https://app.arcjet.com/)
 
 ### Installation
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/suryanshsingh2001/devmd.git
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/suryanshsingh2001/devmd.git
 
-2. Navigate to the project directory:
-   ```
-   cd devmd
-   ```
+# Navigate to project directory
+cd devmd
 
-3. Install dependencies:
-   ```
-   npm install
-   # or
-   yarn install
-   ```
-   
-4. Add enviroment variables
-   ```
-   GEMINI_API_KEY=<GEMINI_API_KEY>
-   ARCJET_KEY=<ARCJET_KEY> # This is purely optional.
-   RATE_LIMIT_ENABLED=true # Set to 'false' to disable rate limiting in local development environments
-   MAX_REQUESTS=20
-   NEXT_PUBLIC_MAX_CHARACTERS=5000
-   ```
+# Install dependencies
+npm install
+# or
+yarn install
+```
 
+### Environment Setup
 
-4. Start the development server:
-   ```
-   npm run dev
-   # or
-   yarn dev
-   ```   
+Create a `.env.local` file in the root directory:
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+```env
+# Required: Your Gemini API key
+GEMINI_API_KEY=your_gemini_api_key_here
 
-🧠 How It Works
+# Optional: Arcjet for rate limiting
+ARCJET_KEY=your_arcjet_key_here
 
-1. Paste your Medium or Peerlist article content (or URL).
+# Rate limiting configuration
+RATE_LIMIT_ENABLED=true  # Set to 'false' to disable in development
+MAX_REQUESTS=20
 
-2. DevMD uses AI (Gemini Flash) to parse and structure your article.
+# Character limit per conversion
+NEXT_PUBLIC_MAX_CHARACTERS=5000
+```
 
-3. The Markdown output is formatted specifically for dev.to.
+> **Note:** Set `RATE_LIMIT_ENABLED=false` during local development to disable rate limiting.
 
-4. Copy and publish it directly to your dev.to editor!
+### Running the Application
 
+```bash
+# Start development server
+npm run dev
+# or
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to start using DevMD.
 
 ---
 
-## ⚠️ Limitations
-- 🖼️ **No Image Support:** Currently, images need to be manually uploaded to dev.to.  
-- ✂️ **Word Limit:** Articles above 5,000 characters need to be split into parts.  
+## 💡 How It Works
+
+```mermaid
+graph LR
+    A[Paste Article/URL] --> B[AI Processing]
+    B --> C[Gemini Flash Analysis]
+    C --> D[Markdown Conversion]
+    D --> E[dev.to Ready Output]
+    E --> F[Copy & Publish]
+```
+
+1. **Input** – Paste your Medium/Peerlist article content or URL
+2. **AI Analysis** – Gemini Flash parses and understands your content structure
+3. **Conversion** – Content is transformed into dev.to-compatible Markdown
+4. **Export** – Copy the formatted Markdown and publish directly to dev.to
 
 ---
 
-## 🔮 Future Scope
-- 🧩 **Image Parsing & Automatic Uploads:** Automatically detect and upload Medium images to dev.to.  
-- 🌐 **Browser Extension:** Convert Medium or Peerlist articles directly from your browser.  
-- 🪄 **Rich Formatting Enhancements:** Better support for code blocks, embeds, and custom Markdown.  
-- 🔍 **SEO Optimization Suggestions:** AI-based recommendations to improve your blog visibility.  
-- 🤝 **Community Templates:** Allow users to share conversion templates for different platforms.  
-- 📊 **Analytics Dashboard:** Track conversion history and performance.  
+## ⚠️ Current Limitations
+
+| Feature | Status | Workaround |
+|---------|--------|------------|
+| 🖼️ **Image Support** | Not Available | Manual upload to dev.to required |
+| ✂️ **Character Limit** | 5,000 characters | Split longer articles into parts |
+| 🎥 **Embedded Content** | Limited | May require manual formatting |
 
 ---
 
-## 🎉 Hacktoberfest 2025
+## 🔮 Roadmap
 
-We're excited to participate in Hacktoberfest 2025! Here's how you can contribute:
+### 🎯 Next Up
 
-### 📜 Ground Rules
+- [ ] Automated image extraction and upload to dev.to
+- [ ] Increased character limit (10,000+ characters)
+- [ ] Enhanced code block preservation with syntax highlighting
+- [ ] Support for embedded tweets and YouTube videos
 
-1. Contributions must be meaningful and add value to the project.
-2. Follow our code style and best practices.
-3. Be respectful and collaborative in discussions.
-4. Test your changes thoroughly before submitting a PR.
+### 🚀 Future Vision
 
-### 🛠️ How to Contribute
+- [ ] **Browser Extension** – Convert articles with one click from Medium/Peerlist
+- [ ] **Multi-Platform Export** – Hashnode, Ghost, WordPress support
+- [ ] **SEO Optimizer** – AI-powered recommendations for better reach
+- [ ] **Batch Processing** – Convert multiple articles simultaneously
+- [ ] **Conversion History** – Track and manage all your conversions
+- [ ] **Custom Templates** – Community-driven conversion profiles
+- [ ] **Analytics Dashboard** – Monitor conversion performance
 
-1. Fork the repository to your GitHub account.
-2. Create a new branch for your feature or bug fix:
-   ```
-   git checkout -b feature/your-feature-name
-   ```
-   or
-   ```
-   git checkout -b fix/your-bug-fix-name
-   ```
-3. Make your changes, ensuring they align with the issue template if addressing a specific issue.
-4. Commit your changes with a clear and descriptive commit message.
-5. Push your branch to your forked repository:
-   ```
-   git push origin feature/your-feature-name
-   ```
-6. Open a Pull Request (PR) to our `main` branch.
+Have ideas? [Share them with us!](https://github.com/suryanshsingh2001/devmd/issues/new?template=feature_request.md)
 
-### 🔄 Pull Request Process
+---
 
-1. Ensure your PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
-2. Include screenshots or GIFs in your PR if you've made UI changes.
-3. Make sure your code is properly formatted and passes all tests.
-4. Your PR will be reviewed by maintainers. Be open to feedback and make necessary changes.
-5. Once approved, your PR will be merged into the main codebase.
+## 🤝 Contributing
 
-### 📝 Issue Templates
+We love contributions from developers of all skill levels! DevMD is proudly participating in **Hacktoberfest 2025** 🎃
 
-When creating a new issue or PR, please use our provided templates:
+### Ways to Contribute
 
-- For bug reports: [Bug Report Template](.github/ISSUE_TEMPLATE/bug_report.md)
-- For feature requests: [Feature Request Template](.github/ISSUE_TEMPLATE/feature_request.md)
-- For pull requests: [Pull Request Template](.github/PULL_REQUEST_TEMPLATE.md)
+<table>
+<tr>
+<td width="25%">
 
-### 🐛 Existing Issues and Contributions
+**🐛 Bug Fixes**
 
-We encourage contributors to explore our [existing issues](https://github.com/suryanshsingh2001/devmd/issues) and contribute to them. Here are some ways you can help:
+Find and fix issues labeled [`bug`](https://github.com/suryanshsingh2001/devmd/labels/bug)
 
-1. **Bug Fixes**: Look for issues labeled `bug` and help us squash them!
-2. **Feature Implementation**: Issues labeled `enhancement`or `feature` are great opportunities to add new features to DevMD.
-3. **Documentation**: Help us improve our docs by addressing issues labeled `documentation`.
-4. **UI/UX Improvements**: If you have design skills, look for issues labeled `ui` or `ux`.
+</td>
+<td width="25%">
 
-Don't see an issue that matches your interests? Feel free to [create a new issue](https://github.com/suryanshsingh2001/devmd/issues/new/choose) and discuss your ideas with the community!
+**✨ New Features**
 
-We look forward to your contributions and hope you enjoy participating in Hacktoberfest with DevMD!
+Build features labeled [`enhancement`](https://github.com/suryanshsingh2001/devmd/labels/enhancement)
 
-## ❓  Frequently Asked Questions (FAQs)
+</td>
+<td width="25%">
 
-<details> <summary>1. What is DevMD?</summary> DevMD converts your Medium or Peerlist articles into dev.to-ready Markdown, preserving structure and readability using AI. </details> <details> <summary>2. How does DevMD work?</summary> You paste your article content or URL, and DevMD’s AI reformats it into Markdown suitable for dev.to. </details> <details> <summary>3. Does DevMD support images?</summary> Not yet — you’ll need to manually upload them to dev.to. Image support is coming soon. </details> <details> <summary>4. Which AI model powers DevMD?</summary> DevMD is powered by Google’s **Gemini Flash**, known for fast and high-quality text understanding. </details> <details> <summary>5. Is DevMD open source?</summary> Yes! DevMD is open source — contributions are encouraged, especially during Hacktoberfest. </details> <details> <summary>6. How many conversions can I do?</summary> Up to 5 conversions per day are allowed to maintain fair usage. </details>
+**📚 Documentation**
 
-## 👥 Contributing
+Improve docs labeled [`documentation`](https://github.com/suryanshsingh2001/devmd/labels/documentation)
 
-We welcome contributions from the community! Please read our [Contribution Guidelines](CONTRIBUTING.md) for more details on our year-round contribution process.
+</td>
+<td width="25%">
 
+**🎨 UI/UX**
 
-<a href="https://github.com/suryanshsingh2001/devmd/graphs/contributors"> <img src="https://contrib.rocks/image?repo=suryanshsingh2001/devmd" /> </a>
+Enhance design labeled [`ui/ux`](https://github.com/suryanshsingh2001/devmd/labels/ui)
 
-## 🤝 Code of Conduct
+</td>
+</tr>
+</table>
 
-We are committed to fostering an inclusive and welcoming community. Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
+### Getting Started
+
+```bash
+# 1. Fork the repository on GitHub
+
+# 2. Clone your fork
+git clone https://github.com/YOUR_USERNAME/devmd.git
+
+# 3. Create a feature branch
+git checkout -b feature/amazing-feature
+
+# 4. Make your changes and commit
+git commit -m "feat: add amazing feature"
+
+# 5. Push to your fork
+git push origin feature/amazing-feature
+
+# 6. Open a Pull Request
+```
+
+### Contribution Guidelines
+
+✅ **Do:**
+- Write meaningful commit messages
+- Add tests for new features
+- Update documentation when needed
+- Follow the existing code style
+- Be respectful and collaborative
+
+❌ **Don't:**
+- Submit untested code
+- Make unrelated changes in one PR
+- Ignore feedback from maintainers
+
+Read our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) for more details.
+
+### 📋 Issue Templates
+
+Use our templates when creating issues:
+
+- [🐛 Bug Report](.github/ISSUE_TEMPLATE/bug_report.md)
+- [✨ Feature Request](.github/ISSUE_TEMPLATE/feature_request.md)
+- [📝 Pull Request](.github/PULL_REQUEST_TEMPLATE.md)
+
+### 🎃 Hacktoberfest 2025
+
+Contributing during October? Your PRs count toward Hacktoberfest!
+
+**Ground Rules:**
+1. Contributions must add real value
+2. Test thoroughly before submitting
+3. Follow project standards
+4. Be patient and respectful
+
+Check out [good first issues](https://github.com/suryanshsingh2001/devmd/labels/good%20first%20issue) to get started!
+
+---
+
+## ❓ FAQ
+
+<details>
+<summary><strong>What platforms does DevMD support?</strong></summary>
+<br>
+DevMD currently supports converting articles from Medium and Peerlist to dev.to format. Support for additional platforms (Hashnode, Ghost, WordPress) is planned for future releases.
+</details>
+
+<details>
+<summary><strong>How many conversions can I do per day?</strong></summary>
+<br>
+The default limit is 20 conversions per day (configurable via MAX_REQUESTS). This ensures fair API usage and sustainability. Rate limiting can be disabled for local development.
+</details>
+
+<details>
+<summary><strong>How do I handle images in my articles?</strong></summary>
+<br>
+Currently, images must be manually uploaded to dev.to. Automated image handling is our top priority feature and is actively being developed.
+</details>
+
+<details>
+<summary><strong>Is DevMD free to use?</strong></summary>
+<br>
+Yes! DevMD is completely free and open source under the MIT License. However, you'll need your own Gemini API key, which has generous free tier limits from Google.
+</details>
+
+<details>
+<summary><strong>Can I use DevMD for commercial purposes?</strong></summary>
+<br>
+Absolutely! The MIT License allows commercial use. Just remember to provide attribution and comply with Google's Gemini API terms of service.
+</details>
+
+<details>
+<summary><strong>Which AI model powers DevMD?</strong></summary>
+<br>
+DevMD uses Google's Gemini Flash model, optimized for fast and high-quality text understanding and transformation.
+</details>
+
+<details>
+<summary><strong>What's the character limit for conversions?</strong></summary>
+<br>
+Currently 5,000 characters per conversion. For longer articles, we recommend splitting them into multiple parts. We're working on increasing this limit.
+</details>
+
+<details>
+<summary><strong>Do I need an Arcjet key?</strong></summary>
+<br>
+No, Arcjet is optional and only used for rate limiting. You can set RATE_LIMIT_ENABLED=false in your .env file to run without it.
+</details>
+
+---
+
+## 🛠️ Tech Stack
+
+<table>
+<tr>
+<td align="center" width="96">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="48" height="48" alt="Next.js" />
+<br>Next.js
+</td>
+<td align="center" width="96">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="48" height="48" alt="React" />
+<br>React
+</td>
+<td align="center" width="96">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="48" height="48" alt="TypeScript" />
+<br>TypeScript
+</td>
+<td align="center" width="96">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" width="48" height="48" alt="Tailwind" />
+<br>Tailwind
+</td>
+</tr>
+</table>
+
+**Additional Technologies:**
+- **UI Components:** shadcn/ui
+- **AI Processing:** Google Gemini Flash
+- **Rate Limiting:** Arcjet
+- **Icons:** Lucide React
+
+---
+
+## 👥 Contributors
+
+A huge thank you to all our contributors! 🎉
+
+<a href="https://github.com/suryanshsingh2001/devmd/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=suryanshsingh2001/devmd" />
+</a>
+
+Want to see your face here? [Start contributing today!](CONTRIBUTING.md)
+
+---
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
-
-## 📞 Contact
-
-- Project Maintainer: [Suryansh](https://www.linkedin.com/in/suryanshsingh2001/)
-- Project Website: [https://www.devmd.site](https://devmd.surydev.site/))
-
-## 🙏 Acknowledgments
-
-- Thanks to all contributors who have helped shape DevMD.
-- Built with [Next.js](https://nextjs.org/) and [shadcn/ui](https://ui.shadcn.com/).
-- Icons provided by [Lucide](https://lucide.dev/).
+This project is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute as you see fit.
 
 ---
 
-Made with ❤️ by the DevMD community
+## 📬 Connect & Support
+
+**Maintainer:** [Suryansh Singh](https://www.linkedin.com/in/suryanshsingh2001/)
+
+**Website:** [devmd.surydev.site](https://devmd.surydev.site/)
+
+**Issues:** [GitHub Issues](https://github.com/suryanshsingh2001/devmd/issues)
+
+---
+
+
+## 🙏 Acknowledgments
+
+- Built with ❤️ using [Next.js](https://nextjs.org/) and [shadcn/ui](https://ui.shadcn.com/)
+- Powered by [Google Gemini](https://deepmind.google/technologies/gemini/)
+- Icons provided by [Lucide](https://lucide.dev/)
+- Rate limiting by [Arcjet](https://arcjet.com/)
+- Inspired by the amazing developer community
+
+---
+
+<div align="center">
+
+**Made with ❤️ by the DevMD community**
+
+[⬆ back to top](#devmd-)
+
+</div>
