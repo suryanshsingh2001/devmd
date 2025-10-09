@@ -16,6 +16,14 @@
 
 <img width="1536" height="800" alt="DevMD Interface" src="https://github.com/user-attachments/assets/2a987ef4-4854-40e6-b9a5-826494b96817" />
 
+<a href="https://peerlist.io/surydev/project/devmd" target="_blank" rel="noreferrer">
+				<img
+					src="https://peerlist.io/api/v1/projects/embed/PRJHP69MD7OAD7QLGHRLDMKMLPOBQ6?showUpvote=true&theme=dark"
+					alt="DevMD"
+					style="width: auto; height: 72px;"
+				/>
+			</a>
+
 </div>
 
 ---
@@ -339,6 +347,7 @@ A huge thank you to all our contributors! 🎉
   <img src="https://contrib.rocks/image?repo=suryanshsingh2001/devmd" />
 </a>
 
+
 Want to see your face here? [Start contributing today!](CONTRIBUTING.md)
 
 ---
@@ -374,6 +383,6 @@ This project is licensed under the [MIT License](LICENSE). Feel free to use, mod
 
 **Made with ❤️ by the DevMD community**
 
-[⬆ back to top](#devmd-)
+[⬆ back to top](#devmd)
 
 </div>
