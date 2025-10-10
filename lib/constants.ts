@@ -1,22 +1,7 @@
-export const CONVERT_LOADING_STATES = [
-  {
-    text: "Converting your text... 📝",
-  },
-  {
-    text: "Teaching AI proper grammar... 🎓",
-  },
-  {
-    text: "Adding markdown magic... ✨",
-  },
-  {
-    text: "Making it dev.to friendly... 🚀",
-  },
-  {
-    text: "Almost there! ⚡",
-  },
-] as const;
+// lib/constants.ts
 
-export const LOADING_STATES = [
+// Scraping-related loading states
+export const SCRAPING_LOADING_STATES = [
   {
     text: "Extracting content... 📄",
   },
@@ -35,6 +20,10 @@ export const LOADING_STATES = [
   {
     text: "Fetching from Peerlist... 🌐",
   },
+] as const;
+
+// Conversion-related loading states
+export const CONVERT_LOADING_STATES = [
   {
     text: "Converting your text... 📝",
   },
@@ -48,10 +37,17 @@ export const LOADING_STATES = [
     text: "Making it dev.to friendly... 🚀",
   },
   {
-    text: "Almost there! Hold onto your keyboards! ⚡",
+    text: "Almost there! ⚡",
   },
 ] as const;
 
+// Combined loading states — no duplicates 🎯
+export const LOADING_STATES = [
+  ...SCRAPING_LOADING_STATES,
+  ...CONVERT_LOADING_STATES,
+] as const;
+
+// FAQs (unchanged)
 export const FAQs = [
   {
     question: "What is DevMD?",
