@@ -56,65 +56,73 @@ export function ResultSection({ markdown, onTryAgain }: ResultSectionProps) {
 
   return (
     <Card className="p-3 space-y-4">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <FileCheck className="w-5 h-5 text-green-500" />
-          <h2 className="text-xl font-semibold">Result</h2>
-        </div>
-        {markdown && (
+      {/* Header with responsive layout */}
+      <div className="mb-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={exportFile}
-              className="flex items-center gap-2"
-            >
-              <Download className="w-5 h-5" />
-              <span>Export</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={copyToClipboard}
-              className="flex items-center gap-2"
-            >
-              {isCopied ? (
-                <>
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
-                  <span className="text-green-500">Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-5 h-5 text-primary" />
-                  <span className="">Copy to clipboard</span>
-                </>
-              )}
-            </Button>
+            <FileCheck className="w-5 h-5 text-green-500" />
+            <h2 className="text-xl font-semibold">Result</h2>
           </div>
-        )}
+
+          {/* Buttons inline on md+, stacked below on sm */}
+          {markdown && (
+            <div className="flex flex-col sm:flex-col md:flex-row gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={exportFile}
+                className="flex items-center gap-2"
+              >
+                <Download className="w-5 h-5" />
+                <span>Export</span>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={copyToClipboard}
+                className="flex items-center gap-2"
+              >
+                {isCopied ? (
+                  <>
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                    <span className="text-green-500">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-5 h-5 text-primary" />
+                    <span>Copy to clipboard</span>
+                  </>
+                )}
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
-      
+
+      {/* Show Raw Toggle */}
       <div className="flex items-center gap-2 mb-4">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => setShowRaw(!showRaw)}
-          className="text-sm"
+          className="text-sm outline"
         >
           {showRaw ? "Show Rendered" : "Show Raw"}
         </Button>
       </div>
-      
+
+      {/* Markdown Viewer */}
       <div className="min-h-[400px] bg-gray-50 dark:bg-gray-900 rounded-md p-4 overflow-auto">
         <MarkdownRenderer markdown={markdown} showRaw={showRaw} />
       </div>
-      
+
+      {/* Try Again Button */}
       <Button
         className="w-full"
         size="lg"
         onClick={onTryAgain}
       >
-        Try Again
+        Write Another
       </Button>
     </Card>
   );
