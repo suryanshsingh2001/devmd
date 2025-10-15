@@ -36,28 +36,95 @@
 //    </DropdownMenu>
 //  );
 //}
+//"use client";
+//
+//import { useTheme } from "next-themes";
+//import { Sun, Moon } from "lucide-react";
+//import { motion } from "framer-motion";
+//
+//export default function ModeToggle() {
+//  const { theme, setTheme } = useTheme();
+//
+//  const toggleTheme = () => {
+//    setTheme(theme === "light" ? "dark" : "light");
+//  };
+//
+//  return (
+//    <button
+//      onClick={toggleTheme}
+//      className="p-2 rounded-full transition hover:bg-gray-200 dark:hover:bg-gray-700"
+//      aria-label="Toggle theme"
+//    >
+//      <motion.button
+//        onClick={toggleTheme}
+//        whileTap={{ rotate: 180 }}
+//        transition={{ duration: 0.3 }}
+//        className="p-3 rounded-full transition hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center"
+//        aria-label="Toggle theme"
+//      >
+//        {theme === "light" ? <Moon size={22} /> : <Sun size={22} />}
+//      </motion.button>
+//    </button>
+//  );
+//}
+//"use client";
+//
+//import { useTheme } from "next-themes";
+//import { Sun, Moon } from "lucide-react";
+//import { motion } from "framer-motion";
+//
+//export default function ModeToggle() {
+//  const { theme, setTheme } = useTheme();
+//
+//  const toggleTheme = () => {
+//    setTheme(theme === "light" ? "dark" : "light");
+//  };
+//
+//  return (
+//    <motion.button
+//      onClick={toggleTheme}
+//      whileTap={{ rotate: 180 }}
+//      transition={{ duration: 0.3 }}
+//      className="p-3 rounded-full transition hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center"
+//      aria-label="Toggle theme"
+//    >
+//      {theme === "light" ? <Moon size={22} /> : <Sun size={22} />}
+//    </motion.button>
+//  );
+//}
+//
 "use client";
 
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function ModeToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Wait for component to mount before rendering icons
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
+  // Prevent rendering on server to avoid hydration mismatch
+  if (!mounted) return null;
+
   return (
-    <button
+    <motion.button
       onClick={toggleTheme}
-      className="p-2 rounded-full transition hover:bg-gray-200 dark:hover:bg-gray-700"
+      whileTap={{ rotate: 180 }}
+      transition={{ duration: 0.3 }}
+      className="p-3 rounded-full transition hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center"
       aria-label="Toggle theme"
     >
-      <motion.div whileTap={{ rotate: 180 }} transition={{ duration: 0.3 }}>
-        {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-      </motion.div>
-    </button>
+      {theme === "light" ? <Moon size={22} /> : <Sun size={22} />}
+    </motion.button>
   );
 }
