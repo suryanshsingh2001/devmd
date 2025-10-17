@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import { config } from "@/config";
-import { ModeToggle } from "./theme-toggle";
+import ModeToggle  from "./theme-toggle";
 import { FaqDialog } from "./faq-dialog";
 
 const Header = () => {
