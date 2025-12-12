@@ -1,8 +1,9 @@
 import aj from "@/lib/arcjet";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 const RATE_LIMIT_ENABLED = process.env.RATE_LIMIT_ENABLED === "true";
 
 export async function POST(req: Request) {
@@ -21,8 +22,6 @@ export async function POST(req: Request) {
     }
 
     const { text } = await req.json();
-
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const prompt = `DO NOT PARAPHRASE OR MODIFY THE CONTENT IN ANY WAY! Your task is ONLY to convert the text to markdown format.
 
@@ -46,11 +45,12 @@ export async function POST(req: Request) {
     Text to convert (KEEP EXACTLY AS IS):
     ${text}`;
 
-    const result = await model.generateContent(prompt);
-    const response =  result.response;
-    const markdown = response.text();
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+    });
 
-
+    const markdown = response.text;
     console.log("Conversion result:", markdown);
     return NextResponse.json({ markdown });
   } catch (error) {

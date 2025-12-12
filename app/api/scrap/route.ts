@@ -33,7 +33,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        Accept: "text/html,application/xhtml+xml",
+      },
+    });
+    console.log("Scraping response status:", response);
     const html = await response.text();
     const $ = cheerio.load(html);
 
@@ -50,17 +57,16 @@ export async function POST(request: Request) {
     if (content.length > MAX_CHARACTERS) {
       content = content.substring(0, MAX_CHARACTERS);
     }
-
+    console.log("Scraped content length:", content);
     if (content === "") {
       return NextResponse.json(
         {
           success: false,
-          error: "Failed to scrape content",
+          error: "Failed to scrape content, not working with the provided URL",
         },
         { status: 500 }
       );
     }
-
     return NextResponse.json({
       success: true,
       data: content,
